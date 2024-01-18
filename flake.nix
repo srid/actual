@@ -11,10 +11,9 @@
         packages = {
           db = pkgs.runCommandNoCC "db" { buildInputs = [ pkgs.fortune ]; } ''
             mkdir -p $out
-            cp ${./db.fortune} $out/db.fortune
+            cp -r ${./db} $out/db
             chmod u+w -R $out/
-            cd $out/
-            strfile db.fortune
+            strfile $out/db/*
           '';
           default = pkgs.writeShellApplication {
             name = "actual";
@@ -23,7 +22,7 @@
               charasay
             ];
             text = ''
-              fortune ${self'.packages.db}/db.fortune | chara say -r
+              fortune ${self'.packages.db}/db/precis | chara say -r
             '';
           };
         };
