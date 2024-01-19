@@ -6,5 +6,4 @@ A [fortune](https://en.wikipedia.org/wiki/Fortune_(Unix)) database of [actualism
 nix run github:srid/actual
 ```
 
-<img width="846" alt="image" src="https://github.com/srid/actual/assets/3998/bf056e7e-16bf-4c25-af98-64203a664323">
-
+<img width="406" alt="image" src="https://github.com/srid/actual/assets/3998/0c0462bf-4bf4-4a0f-b0b2-6a0576eaf5d8">
