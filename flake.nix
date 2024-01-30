@@ -50,10 +50,10 @@
                 #addSSL = true;
                 #enableACME = true;
                 # locations."/".proxyPass = "http://localhost:8080";
-                extraConfig = ''
+                locations."/".extraConfig = ''
                   content_by_lua_block {
-                    local handle = io.popen("${lib.getExe self.packages.${pkgs.system}.default}")
-                    local result = handle:read("*a")
+                    local handle = assert(io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r'))
+                    local result = assert(handle:read("*a"))
                     handle:close()
                     ngx.say(result)
                   }
