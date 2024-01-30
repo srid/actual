@@ -51,6 +51,7 @@
                 locations."/".proxyPass = "http://localhost:8080";
               };
             };
+
             security.acme = {
               acceptTerms = true;
               defaults.email = "srid@srid.ca";
