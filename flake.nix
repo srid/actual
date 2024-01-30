@@ -6,7 +6,7 @@
   outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
-      perSystem = { pkgs, lib, self', ... }: {
+      perSystem = { pkgs, lib, system, self', ... }: {
         formatter = pkgs.nixpkgs-fmt;
         packages = {
           db = pkgs.runCommandNoCC "db"
@@ -32,6 +32,16 @@
             '';
           };
         };
+      };
+
+      flake.nixosConfigurations.site = inputs.nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+            boot.loader.grub.device = "/dev/sda";
+          }
+        ];
       };
     };
 }
