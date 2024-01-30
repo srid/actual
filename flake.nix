@@ -37,7 +37,7 @@
       flake.nixosConfigurations.site = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ({pkgs, ... }: {
+          ({pkgs, lib, ... }: {
             fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
             boot.loader.grub.device = "/dev/sda";
 
@@ -52,7 +52,7 @@
                 # locations."/".proxyPass = "http://localhost:8080";
                 extraConfig = ''
                   content_by_lua_block {
-                    local handle = io.popen("fortune")
+                    local handle = io.popen("${lib.getExe self.packages.${pkgs.system}.default}")
                     local result = handle:read("*a")
                     handle:close()
                     ngx.say(result)
