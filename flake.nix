@@ -51,15 +51,18 @@
                 #enableACME = true;
                 # locations."/".proxyPass = "http://localhost:8080";
                 locations."/".extraConfig = ''
+                  default_type 'text/plain';
+
                   content_by_lua_block {
-                    local handle = assert(io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r'))
-                    local result = assert(handle:read("*a"))
-                    handle:close()
-                    ngx.say(result)
+                    ngx.say("hello world")
                   }
                 '';
               };
             };
+                    #local handle = assert(io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r'))
+                    #local result = assert(handle:read("*a"))
+                    #handle:close()
+                    #ngx.say(result)
 
             security.acme = {
               acceptTerms = true;
