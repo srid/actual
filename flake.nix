@@ -47,8 +47,8 @@
               enable = true;
               additionalModules = [ pkgs.nginxModules.lua ];
               virtualHosts."actual.srid.garnix.me" = {
-                addSSL = true;
-                enableACME = true;
+                #addSSL = true;
+                #enableACME = true;
                 # locations."/".proxyPass = "http://localhost:8080";
                 extraConfig = ''
                   content_by_lua_block {
