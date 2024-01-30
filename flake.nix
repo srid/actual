@@ -40,6 +40,21 @@
           {
             fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
             boot.loader.grub.device = "/dev/sda";
+
+            networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+            services.nginx = {
+              # enable = true;
+              virtualHosts."actual.srid.garnix.me" = {
+                addSSL = true;
+                enableACME = true;
+                locations."/".proxyPass = "http://localhost:8080";
+              };
+            };
+            security.acme = {
+              acceptTerms = true;
+              defaults.email = "srid@srid.ca";
+            };
           }
         ];
       };
