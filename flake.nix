@@ -45,6 +45,7 @@
 
             services.nginx = {
               enable = true;
+              package = pkgs.openresty;
               additionalModules = [ pkgs.nginxModules.lua ];
               virtualHosts."actual.srid.garnix.me" = {
                 #addSSL = true;
