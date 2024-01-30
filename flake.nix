@@ -37,18 +37,27 @@
       flake.nixosConfigurations.site = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          {
+          ({pkgs, ... }: {
             fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
             boot.loader.grub.device = "/dev/sda";
 
             networking.firewall.allowedTCPPorts = [ 80 443 ];
 
             services.nginx = {
-              # enable = true;
+              enable = true;
+              additionalModules = [ pkgs.nginxModules.lua ];
               virtualHosts."actual.srid.garnix.me" = {
                 addSSL = true;
                 enableACME = true;
-                locations."/".proxyPass = "http://localhost:8080";
+                # locations."/".proxyPass = "http://localhost:8080";
+                extraConfig = ''
+                  content_by_lua_block {
+                    local handle = io.popen("fortune")
+                    local result = handle:read("*a")
+                    handle:close()
+                    ngx.say(result)
+                  }
+                '';
               };
             };
 
@@ -56,7 +65,7 @@
               acceptTerms = true;
               defaults.email = "srid@srid.ca";
             };
-          }
+          })
         ];
       };
     };
