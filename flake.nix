@@ -1,6 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:lblasc/nixpkgs/openresty"; # https://github.com/NixOS/nixpkgs/pull/280223/files
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
   outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
