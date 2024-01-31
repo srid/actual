@@ -6,7 +6,7 @@
   outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
-      perSystem = { pkgs, lib, system, self', ... }: {
+      perSystem = { pkgs, lib, self', ... }: {
         formatter = pkgs.nixpkgs-fmt;
         packages = {
           db = pkgs.runCommandNoCC "db"
@@ -47,8 +47,8 @@
               enable = true;
               package = pkgs.openresty;
               virtualHosts."actual.srid.garnix.me" = {
-                #addSSL = true;
-                #enableACME = true;
+                addSSL = true;
+                enableACME = true;
                 locations."/".extraConfig = ''
                   default_type 'text/plain';
                   charset utf-8;
