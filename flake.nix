@@ -37,7 +37,7 @@
       flake.nixosConfigurations.site = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ({pkgs, lib, ... }: {
+          ({ pkgs, lib, ... }: {
             fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
             boot.loader.grub.device = "/dev/sda";
 
