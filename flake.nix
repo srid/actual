@@ -1,7 +1,6 @@
 {
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs.url = "github:lblasc/nixpkgs/openresty"; # https://github.com/NixOS/nixpkgs/pull/280223/files
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
   outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
@@ -47,11 +46,9 @@
             services.nginx = {
               enable = true;
               package = pkgs.openresty;
-              # additionalModules = [ pkgs.nginxModules.lua ];
               virtualHosts."actual.srid.garnix.me" = {
                 #addSSL = true;
                 #enableACME = true;
-                # locations."/".proxyPass = "http://localhost:8080";
                 locations."/".extraConfig = ''
                   default_type 'text/plain';
 
