@@ -53,15 +53,14 @@
                   default_type 'text/plain';
 
                   content_by_lua_block {
-                    ngx.say("hello world")
+                    local handle = io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r')
+                    local result = handle:read("*a")
+                    handle:close()
+                    ngx.say(result)
                   }
                 '';
               };
             };
-                    #local handle = assert(io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r'))
-                    #local result = assert(handle:read("*a"))
-                    #handle:close()
-                    #ngx.say(result)
 
             security.acme = {
               acceptTerms = true;
