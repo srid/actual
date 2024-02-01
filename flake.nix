@@ -46,9 +46,9 @@
             services.nginx = {
               enable = true;
               package = pkgs.openresty;
-              virtualHosts."actual.srid.garnix.me" = {
-                addSSL = true;
-                enableACME = true;
+              virtualHosts."site.garnix.actual.srid.garnix.me" = {
+                #addSSL = true;
+                #enableACME = true;
                 locations."/".extraConfig = ''
                   default_type 'text/plain';
                   charset utf-8;
