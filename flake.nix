@@ -33,5 +33,42 @@
           };
         };
       };
+
+      flake.nixosConfigurations.site = inputs.nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ({ pkgs, lib, ... }: {
+            fileSystems."/" = { device = "/dev/sda1"; fsType = "ext4"; };
+            boot.loader.grub.device = "/dev/sda";
+
+            networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+            services.nginx = {
+              enable = true;
+              package = pkgs.openresty;
+              virtualHosts."site.garnix.actual.srid.garnix.me" = {
+                #addSSL = true;
+                #enableACME = true;
+                locations."/".extraConfig = ''
+                  default_type 'text/plain';
+                  charset utf-8;
+
+                  content_by_lua_block {
+                    local handle = io.popen("${lib.getExe self.packages.${pkgs.system}.default}", 'r')
+                    local result = handle:read("*a")
+                    handle:close()
+                    ngx.say(result)
+                  }
+                '';
+              };
+            };
+
+            security.acme = {
+              acceptTerms = true;
+              defaults.email = "srid@srid.ca";
+            };
+          })
+        ];
+      };
     };
 }
